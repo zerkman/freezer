@@ -1,0 +1,24 @@
+#!/bin/sh
+aclocal || exit 1
+libtoolize --copy --force || exit 1
+autoconf || exit 1
+autoheader || exit 1
+automake --add-missing --copy
+tail -15 $0 | patch -N -p0
+exit 0
+
+--- config.sub	2010-05-16 07:37:55.000000000 +0200
++++ config.sub.new	2010-05-16 07:37:39.000000000 +0200
+@@ -943,6 +943,12 @@
+ 	ppc64le-* | powerpc64little-*)
+ 		basic_machine=powerpc64le-`echo $basic_machine | sed 's/^[^-]*-//'`
+ 		;;
++	ppu32)
++		basic_machine=powerpc-unknown
++		;;
++	ppu)
++		basic_machine=powerpc64-unknown
++		;;
+ 	ps2)
+ 		basic_machine=i386-ibm
+ 		;;
