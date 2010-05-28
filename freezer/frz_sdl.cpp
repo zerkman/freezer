@@ -102,8 +102,8 @@ bool SDLSystem::test_exit( ) {
 }
 
 SDLSystem::SDLSystem(const char *title, Script &s, int width, int height,
-                     int videomode, uint32_t _t0)
-    : System(s, width, height, false), screen(0), t0(_t0) {
+                     int videomode, uint32_t t0)
+    : System(s, width, height, false), screen(0), _t0(t0) {
   /* Initialize the SDL library */
   if( SDL_Init(SDL_INIT_VIDEO) < 0 )
   {
@@ -151,7 +151,7 @@ int SDLSystem::operator()() {
       return 1;
     }
     if (!pause_) {
-      draw(SDL_GetTicks()+t0);
+      draw(SDL_GetTicks()+_t0);
       memcpy(screen->pixels, pixbuf, pitch*height);
     }
 

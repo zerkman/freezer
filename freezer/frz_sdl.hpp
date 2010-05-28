@@ -29,14 +29,14 @@ namespace Frz {
 class SDLSystem : public System {
 protected:
   SDL_Surface *screen;
-  uint32_t t0;
+  uint32_t _t0;
 
   static void vsync();
   static bool test_exit();
 
 public:
   SDLSystem(const char *title, Script &s, int width, int height, int videomode,
-            uint32_t _t0=0);
+            uint32_t t0=0);
   virtual ~SDLSystem() {}
 
   static int parseCmd(int argc, char **argv, int &width, int &height,
