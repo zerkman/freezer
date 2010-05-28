@@ -74,7 +74,7 @@ void SDLSystem::vsync() {
   next_time += 1000 / FRAMERATE;
 }
 
-int SDLSystem::test_exit( ) {
+bool SDLSystem::test_exit( ) {
   SDL_Event event;
   SDLKey sym;
   static int esc_pressed = 0;

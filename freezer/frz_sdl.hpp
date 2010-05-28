@@ -32,7 +32,7 @@ protected:
   uint32_t t0;
 
   static void vsync();
-  static int test_exit();
+  static bool test_exit();
 
 public:
   SDLSystem(const char *title, Script &s, int width, int height, int videomode,
