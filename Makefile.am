@@ -27,7 +27,7 @@ SUBDIRS= freezer
 #Distribute these directories:
 DIST_SUBDIRS = freezer examples scripts
 
-EXTRA_DIST = bootstrap
+EXTRA_DIST = bootstrap doxygen.cfg
 
 library_includedir=$(includedir)/freezer
 library_include_HEADERS=config.h

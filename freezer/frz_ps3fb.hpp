@@ -1,4 +1,4 @@
-/* PS3 framebuffer environment.
+/* PS3 framebuffer graphics environment.
  * Copyright (C) 2010 Francois Galea <fgalea@free.fr>
  *
  * This file is part of Freezer.
@@ -47,25 +47,42 @@ enum JoystickStatus {
   PS
 };
 
+/*! \brief Base class for user input device.
+ *
+ * This is a simple framework for either handling or simulating a PS3
+ * controller.
+ */
 class Buttons {
 public:
+  //! Default constructor.
   Buttons();
   virtual ~Buttons() {}
 
+  /*! \brief Returns a bitfield of the currently pressed buttons */
   virtual int getAllButtons() = 0;
+  /*! \brief Return the status of button \p b. */
   int getButton(int b);
 
 protected:
+  /*! \brief Updates the local copy of button status. */
   virtual void update() = 0;
+  /*! \brief Return the status of button \p b without performing a status
+   * update. */
   int getButtonNoUpdate(int b);
-
+  //! Internal bitfield containing a copy of the status of all buttons.
   unsigned int buttons[256/sizeof(unsigned int)];
 };
 
+/*! \brief PS3 controller input device.
+ *
+ * This is a Buttons extension for the PS3 controller.
+ */
 class Joystick: public Buttons {
 public:
+  //! Default constructor.
   Joystick();
   virtual ~Joystick();
+  //! Get the value of selected axis
   int getAxis(int a);
   virtual int getAllButtons();
 
@@ -77,8 +94,13 @@ private:
   int axis[4];
 };
 
+/*! \brief Keyboard input device.
+ *
+ * This is a Buttons extension for the Linux keyboard.
+ */
 class Keyboard: public Buttons {
 public:
+  //! Default constructor.
   Keyboard();
   virtual ~Keyboard();
   virtual int getAllButtons();
@@ -130,15 +152,38 @@ public:
   uint32_t getHeight() { return height; }
 };
 
+/*! \brief PS3 framebuffer graphics environment.
+ *
+ * This is a graphics environment which uses the PS3 framebuffer for graphics
+ * output.
+ *
+ * The environment adapts itself to the screen resolution.
+ *
+ * The main loop of the animation system uses a Buttons derived object to test
+ * for the user exit of the animation: if the user presses the Esc key (using a
+ * Keyboard object) or the circle button (using a Joystick object) the loop
+ * exits.
+ */
 class PS3FBSystem : public System {
   FrameBuffer &fb;
   Buttons &b;
   bool _pause;
 
 public:
+  /*! \brief Constructs a SDLSystem object.
+   *
+   * \param s The animation script object.
+   * \param _fb The current frame buffer.
+   * \param _b A Keyboard or Joystick object, for main loop exit test.
+   */
   PS3FBSystem(Script &s, FrameBuffer &_fb, Buttons &_b);
   virtual ~PS3FBSystem() {}
 
+  /*! \brief Executes the animation.
+   *
+   * The animation stops when the user presses the Esc key (using a Keyboard
+   * object) or the circle button (using a Joystick object).
+   */
   int operator()();
 };
 
