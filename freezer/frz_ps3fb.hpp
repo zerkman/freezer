@@ -27,23 +27,25 @@
 
 namespace Frz {
 
-#define JOYSTICK_SELECT 0
-#define JOYSTICK_L3 1
-#define JOYSTICK_R3 2
-#define JOYSTICK_START 3
-#define JOYSTICK_UP 4
-#define JOYSTICK_RIGHT 5
-#define JOYSTICK_DOWN 6 
-#define JOYSTICK_LEFT 7
-#define JOYSTICK_L2 8
-#define JOYSTICK_R2 9
-#define JOYSTICK_L1 10
-#define JOYSTICK_R1 11
-#define JOYSTICK_TRIANGLE 12
-#define JOYSTICK_CIRCLE 13
-#define JOYSTICK_CROSS 14
-#define JOYSTICK_SQUARE 15
-#define JOYSTICK_PS 16
+enum JoystickStatus {
+  SELECT = 0,
+  L3,
+  R3,
+  START,
+  UP,
+  RIGHT,
+  DOWN,
+  LEFT,
+  L2,
+  R2,
+  L1,
+  R1,
+  TRIANGLE,
+  CIRCLE,
+  CROSS,
+  SQUARE,
+  PS
+};
 
 class Buttons {
 public:
@@ -69,6 +71,8 @@ public:
 
 protected:
   virtual void update();
+
+private:
   int joyFD;
   int axis[4];
 };
@@ -82,6 +86,7 @@ public:
 protected:
   virtual void update();
 
+private:
   int fd;
   int e0;
   int oldkbmode;
@@ -89,18 +94,6 @@ protected:
 };
 
 class FrameBuffer {
-public:
-  FrameBuffer();
-  ~FrameBuffer();
-
-  void* getFrameBuffer();     // gets the current off-screen framebuffer
-  void* getOnScreenFrameBuffer();  // gets the currently visible framebuffer
-  void flip();                // flips to the next off-screen frame
-  void vsync();               // wait for vsync
-  void initFPS();             // init FPS counter
-  float getFPS();             // get FPS rate to date
-  int getFramecount();        // get framecount to date
-
   uint32_t width;             // width of the screen
   uint32_t height;            // height of the screen
 
@@ -110,7 +103,6 @@ public:
   uint32_t right;             // end of the viewpoint when not fullscreen
   uint32_t bottom;            // end of the viewpoint when not fullscreen
 
-private:
   void switchMode(bool gfxMode);
   int consoleFD;
 
@@ -122,10 +114,23 @@ private:
 
   struct timeval tv;
   int framecount;
+
+public:
+  FrameBuffer();
+  ~FrameBuffer();
+
+  void* getFrameBuffer();     // gets the current off-screen framebuffer
+  void* getOnScreenFrameBuffer();  // gets the currently visible framebuffer
+  void flip();                // flips to the next off-screen frame
+  void vsync();               // wait for vsync
+  void initFPS();             // init FPS counter
+  float getFPS();             // get FPS rate to date
+  int getFramecount();        // get framecount to date
+  uint32_t getWidth() { return width; }
+  uint32_t getHeight() { return height; }
 };
 
 class PS3FBSystem : public System {
-protected:
   FrameBuffer &fb;
   Buttons &b;
   bool _pause;

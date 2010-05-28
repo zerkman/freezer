@@ -299,7 +299,7 @@ int FrameBuffer::getFramecount() {
 }
 
 PS3FBSystem::PS3FBSystem(Script &s, FrameBuffer &_fb, Buttons &_b):
-    System(s, _fb.width, _fb.height), fb(_fb), b(_b), _pause(false) {
+    System(s, _fb.getWidth(), _fb.getHeight()), fb(_fb), b(_b), _pause(false) {
 }
 
 int PS3FBSystem::operator()() {
@@ -316,7 +316,7 @@ int PS3FBSystem::operator()() {
   msec1 = 0;
   delay = 0;
   fb.initFPS();
-  while (! (but&(1<<JOYSTICK_CIRCLE))) {
+  while (! (but&(1<<CIRCLE))) {
     screen = fb.getFrameBuffer();
     if (((uint64_t)screen) & 0x0FLL) {
       std::cerr<<"Unaligned screen buffer: "<<screen<<std::endl;
@@ -325,7 +325,7 @@ int PS3FBSystem::operator()() {
 
     gettimeofday(&tv, &tz); 
     msec = tv.tv_sec * 1000 + tv.tv_usec/1000;
-    pause_but = (but & 1<<JOYSTICK_START);
+    pause_but = (but & 1<<START);
     if (pause_but && !_pause)
       msec1 = msec;
     else if (!pause_but && _pause)
