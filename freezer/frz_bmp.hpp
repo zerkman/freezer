@@ -25,13 +25,12 @@
 namespace Frz {
 
 class BMPSystem : public System {
-protected:
-  int min, max, step;
-  bool gen;
+  int _min, _max, _step;
+  bool _gen;
 
 public:
-  BMPSystem(Script &s, int width, int height, int _min, int _max, int _step,
-    bool _gen);
+  BMPSystem(Script &s, int width, int height, int min, int max, int step,
+    bool gen);
   virtual ~BMPSystem();
 
   static int parseCmd(int argc, char **argv, int &width, int &height,

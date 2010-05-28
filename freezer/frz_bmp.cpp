@@ -81,9 +81,9 @@ int BMPSystem::parseCmd(int argc, char **argv, int &width, int &height,
   return 0;
 }
 
-BMPSystem::BMPSystem(Script &s, int width, int height, int _min, int _max,
-    int _step, bool _gen): System(s, width, height, false), min(_min),
-    max(_max), step(_step), gen(_gen) {
+BMPSystem::BMPSystem(Script &s, int width, int height, int min, int max,
+    int step, bool gen): System(s, width, height, false), _min(min),
+    _max(max), _step(step), _gen(gen) {
 }
 
 BMPSystem::~BMPSystem() {
@@ -99,11 +99,11 @@ int BMPSystem::operator()() {
     exit(1);
   }
   buf = (uint32_t*)tmpbuf;
-  for (i=min; i<max; i+=step)
+  for (i=_min; i<_max; i+=_step)
   {
     pixbuf = buf + ((pic_num*pitch*height+127)&-128)/4;
     draw(i);
-    if (gen) {
+    if (_gen) {
       std::ostringstream ss;
       ss << "pic_" << std::setw(6) << std::setfill('0') << i << ".bmp";
       saveBitmap(ss.str().c_str());
