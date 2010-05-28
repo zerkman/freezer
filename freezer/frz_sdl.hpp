@@ -36,7 +36,7 @@ protected:
 
 public:
   SDLSystem(const char *title, Script &s, int width, int height, int videomode,
-            uint32_t _t0);
+            uint32_t _t0=0);
   virtual ~SDLSystem() {}
 
   static int parseCmd(int argc, char **argv, int &width, int &height,

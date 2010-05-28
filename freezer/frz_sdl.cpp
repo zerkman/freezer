@@ -40,6 +40,7 @@ int SDLSystem::parseCmd(int argc, char **argv, int &w, int &h, int &vm,
   h = HEIGHT;
   bool has_t0 = false;
   int i;
+  t0 = 0;
 
   for( i = 1; i < argc; i++ ) {
     if( !strcmp( argv[i], "-fs" ) )
@@ -57,7 +58,7 @@ int SDLSystem::parseCmd(int argc, char **argv, int &w, int &h, int &vm,
       t0 = atoi(argv[i]);
     }
     else {
-      std::cerr<<"usage: "<<argv[0]<<" [-fs] [-w <width>] [-h <height>]"
+      std::cerr<<"usage: "<<argv[0]<<" [-fs] [-w <width>] [-h <height>] [time0]"
           <<std::endl;
       return 1;
     }
