@@ -35,7 +35,7 @@
 
 #define DMA_TAG 0
 #define NSCAN 8
-#define MAX_WIDTH 1280
+#define MAX_WIDTH 1920
 #define TR_COUNT 32
 #define MAX_TD_COUNT 32
 #define DRAW_TD_COUNT 64
