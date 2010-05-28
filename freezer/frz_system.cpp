@@ -29,8 +29,6 @@
 
 using namespace Frz;
 
-pthread_mutex_t System::mutex = PTHREAD_MUTEX_INITIALIZER;
-
 System::System(Script &s, int w, int h, bool allocPixbuf) :
     CellGfx(w, h, allocPixbuf), script(s), sync(128, 1), first_draw(true) {
   int i;
