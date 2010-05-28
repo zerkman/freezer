@@ -89,7 +89,7 @@ BMPSystem::BMPSystem(Script &s, int width, int height, int _min, int _max,
 BMPSystem::~BMPSystem() {
 }
 
-void BMPSystem::operator()() {
+int BMPSystem::operator()() {
   int i;
   int pic_num = 0;
   void * tmpbuf;
@@ -112,5 +112,6 @@ void BMPSystem::operator()() {
   }
   pixbuf = 0;
   free(buf);
+  return 0;
 }
 

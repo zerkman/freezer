@@ -37,7 +37,7 @@ public:
   static int parseCmd(int argc, char **argv, int &width, int &height,
     int &min, int &max, int &step, bool &gen);
 
-  void operator()();
+  virtual int operator()();
 };
 
 

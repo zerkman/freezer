@@ -56,6 +56,8 @@ public:
 
   virtual void draw(uint32_t time, void * buf = 0);
   static pthread_mutex_t mutex;
+
+  virtual int operator()() = 0;
 };
 
 }; // namespace Frz
