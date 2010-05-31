@@ -77,15 +77,15 @@ Github</a>
 
 namespace Frz {
 
-struct synchro {
-  uint32_t count[32];
-};
-
 typedef qword triangle_data[8];
 
 /*! \brief Animation system virtual class */
 class System : public CellGfx
 {
+  struct synchro {
+    uint32_t count[32];
+  };
+
   Script &script;
   spe_3d_data data3d __attribute((aligned(16)));
   spe_frame_data fd __attribute((aligned(16)));
