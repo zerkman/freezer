@@ -42,15 +42,8 @@ public:
   CellGfx(int w, int h, bool allocPixbuf = false);
   ~CellGfx();
 
-  struct ThrData {
-    pthread_t id;
-    spe_context_ptr_t context;
-    spe_data data __attribute((aligned(16)));
-  };
-
 protected:
-  ThrData thr[SPE_COUNT] __attribute((aligned(16)));
-  void in_mbox_write(int i, uint32_t* tab, int count);
+  void in_mbox_write(int i, uint32_t* array, int count);
   int out_mbox_status(int i) {
     return spe_out_mbox_status(thr[i].context);
   }
@@ -66,6 +59,13 @@ protected:
   }
 
 private:
+  struct ThrData {
+    pthread_t id;
+    spe_context_ptr_t context;
+    spe_data data __attribute((aligned(16)));
+  };
+
+  ThrData thr[SPE_COUNT] __attribute((aligned(16)));
   static void * thread_main(void * arg);
 };
 
