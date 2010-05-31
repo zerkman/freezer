@@ -30,15 +30,39 @@
 
 namespace Frz {
 
+/*! \brief Pixel buffer manager class.
+ *
+ * This class eventually handles a 32-bit ARGB pixel buffer of required width
+ * and height.
+ */
 class Pixbuf
 {
 protected:
-  int width, height, pitch;
+  //! Surface width in pixels.
+  int width;
+  //! Surface height in pixels.
+  int height;
+  //! Surface pitch in pixels.
+  int pitch;
+  //! Pixel buffer address, if allocated, \c 0 otherwise.
   uint32_t * pixbuf;
 
 public:
+  /*! \brief Constructs a Pixel buffer manager object.
+   *
+   * \param w Picture width in pixels.
+   * \param h Picture height in pixels.
+   * \param allocPixbuf if \b true, allocate a screen buffer.
+   */
   Pixbuf(int w, int h, bool allocPixbuf = false);
+  //! Destructor.
   virtual ~Pixbuf();
+  /*! \brief Exports the buffer into a bitmap file.
+   *
+   * The export file format is uncompressed 24-bit BMP.
+   *
+   * \param filename The name of the file to be created.
+   */
   void saveBitmap(const char *filename);
 };
 
