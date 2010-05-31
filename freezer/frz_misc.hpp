@@ -38,21 +38,32 @@
 
 namespace Frz {
 
+//! A structure for storing rotation and translation coefficients.
 struct trans {
-  float a, b, c, d;
-  float x, y, z, w;
+  float a;  //!< Rotation angle on the \e x axis.
+  float b;  //!< Rotation angle on the \e y axis.
+  float c;  //!< Rotation angle on the \e z axis.
+  float d;  //!< Unused.
+  float x;  //!< Translation value on the \e x axis.
+  float y;  //!< Translation value on the \e y axis.
+  float z;  //!< Translation value on the \e z axis.
+  float w;  //!< Unused.
 };
 
-/* Load a float vector from a potentially unaligned address */
+/* Loads a float vector from a potentially unaligned address. */
 vector float load_unaligned(const float *target);
 
-/* Store a float vector to a potentially unaligned address */
+/* Stores a float vector to a potentially unaligned address. */
 void store_unaligned(float *target, vector float src);
 
-/* create a rotation and translation matrix (columnwise matrix) */
+/* Creates a rotation and translation matrix (columnwise matrix). */
 void make_rotation(vector float rot[4], trans &t);
 
-/* class for aligned vector */
+/*! \brief Memory-aligned resizable buffer.
+ *
+ * Implements a typed buffer with parametrizable alignment in memory, and
+ * optional resizable feature.
+ */
 template <class type>
 class alignvec {
   type *ptr;
@@ -62,23 +73,37 @@ class alignvec {
   bool growable;
 
 public:
-  alignvec() : ptr(0), align(128), size(0), capacity(0), growable(true) {}
-  alignvec(int _align, int _capacity=0) :
+  /*! \brief Constructor.
+   *
+   * Allocates a buffer with specified alignment, and with the choice for fixed
+   * size or not.
+   *
+   * \param _align Memory alignment in bytes.
+   * \param _capacity
+   *    - If zero, the buffer is resizable and has zero initial capacity.
+   *    - Otherwise, the buffer has a fixed capacity of \p _capacity.
+   */
+  alignvec(int _align=128, int _capacity=0) :
       ptr(0), align(_align), size(0), capacity(0), growable(true) {
     if (_capacity)
       setFixedCapacity(_capacity);
   }
+  //! Destructor.
   virtual ~alignvec() {
     if (ptr)
       free(ptr);
   }
-
+  //! Sets the buffer capacity to \p cap, and makes it non-resizable.
   void setFixedCapacity(int cap) {
     growup(cap);
     clear();
     growable = false;
   }
-
+  /*! \brief Increase the buffer size of \p count elements.
+   *
+   * \param count Buffer size increment.
+   * \return The previous number of elements in the buffer.
+   */
   int growup(int count = 1) {
     void *newptr;
     int oldsize;
@@ -107,21 +132,23 @@ public:
     size = newsize;
     return oldsize;
   }
-
+  //! Sets the buffer size to zero.
   void clear() {
     size = 0;
   }
-
+  //! Returns the number of elements in the buffer.
   int getSize() const {
     return size;
   }
+  //! Returns the allocated capacity of the buffer.
   int getCapacity() const {
     return capacity;
   }
-
+  //! Returns element \p i in the buffer array.
   type & operator[](int i) {
     return ptr[i];
   }
+  //! Returns element \p i in the buffer array.
   const type & operator[](int i) const  {
     return ptr[i];
   }
