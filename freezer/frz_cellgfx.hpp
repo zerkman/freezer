@@ -36,22 +36,62 @@ typedef int qword __attribute__((vector_size(16)));
 
 namespace Frz {
 
+/*! \brief Cell Broadband Engine sybsystem class.
+ *
+ * This class interfaces with the libspe2 library. It creates and manages the
+ * SPE threads, and implements mailbox-based communication with the different
+ * SPE threads.
+ */
 class CellGfx : public Pixbuf
 {
 public:
+  /*! \brief Constructs a Cell Broadband Engine sybsystem object.
+   *
+   * \param w Picture width in pixels.
+   * \param h Picture height in pixels.
+   * \param allocPixbuf if \b true, allocate a screen buffer.
+   */
   CellGfx(int w, int h, bool allocPixbuf = false);
   ~CellGfx();
 
 protected:
+  /*! \brief Writes a set of 32-bit integers to the inbound mailbox of a
+   * specified SPE thread.
+   *
+   * \param i SPE thread number (between \c 0 and <tt>SPE_COUNT-1</tt>).
+   * \param array Pointer to the first element in the integer array.
+   * \param count Number of elements to be written.
+   */
   void in_mbox_write(int i, uint32_t* array, int count);
+  /*! \brief Returns the status of the outbound mailbox of a
+   * specified SPE thread.
+   *
+   * \param i SPE thread number (between \c 0 and <tt>SPE_COUNT-1</tt>).
+   * \return the number of elements to be read in the mailbox.
+   */
   int out_mbox_status(int i) {
     return spe_out_mbox_status(thr[i].context);
   }
+  /*! \brief Reads a 32-bit integer from the outbound mailbox of a
+   * specified SPE thread.
+   *
+   * \param i SPE thread number (between \c 0 and <tt>SPE_COUNT-1</tt>).
+   * \return the read value or zero if no value is available.
+   */
   uint32_t out_mbox_read(int i) {
     uint32_t ret;
     spe_out_mbox_read(thr[i].context, &ret, 1);
     return ret;
   }
+  /*! \brief Reads a 32-bit integer from the interrupt outbound mailbox of a
+   * specified SPE thread.
+   *
+   * If no value is available, the current thread waits for a value to become
+   * available.
+   *
+   * \param i SPE thread number (between \c 0 and <tt>SPE_COUNT-1</tt>).
+   * \return the read value.
+   */
   uint32_t out_intr_mbox_read(int i=0) {
     uint32_t ret;
     spe_out_intr_mbox_read(thr[i].context, &ret, 1, SPE_MBOX_ALL_BLOCKING);
