@@ -101,7 +101,10 @@ private:
 class Keyboard: public Buttons {
 public:
   //! Default constructor.
+  /*! Sets the keyboard mode to raw. */
   Keyboard();
+  //! Default destructor.
+  /*! Resets the keyboard mode to normal. */
   virtual ~Keyboard();
   virtual int getAllButtons();
 
