@@ -118,6 +118,7 @@ private:
   struct termios oldtcattr;
 };
 
+//! Interface to the framebuffer.
 class FrameBuffer {
   uint32_t width;             // width of the screen
   uint32_t height;            // height of the screen
@@ -141,17 +142,31 @@ class FrameBuffer {
   int framecount;
 
 public:
+  /*! \brief Constructor.
+   *
+   * Sets the console to graphics mode, and deactivates the cursor.
+   */
   FrameBuffer();
+  //! Destructor.
   ~FrameBuffer();
 
-  void* getFrameBuffer();     // gets the current off-screen framebuffer
-  void* getOnScreenFrameBuffer();  // gets the currently visible framebuffer
-  void flip();                // flips to the next off-screen frame
-  void vsync();               // wait for vsync
-  void initFPS();             // init FPS counter
-  float getFPS();             // get FPS rate to date
-  int getFramecount();        // get framecount to date
+  //! Returns the current off-screen framebuffer.
+  void* getFrameBuffer();
+  //! Returns the currently visible framebuffer.
+  void* getOnScreenFrameBuffer();
+  //! Flips to the next off-screen frame.
+  void flip();
+  //! Wait for vsync.
+  void vsync();
+  //! Initialize the FPS counter.
+  void initFPS();
+  //! Returns the FPS rate to date.
+  float getFPS();
+  //! Returns the framecount to date.
+  int getFramecount();
+  //! Returns the screen width in pixels.
   uint32_t getWidth() { return width; }
+  //! Returns the screen height in pixels.
   uint32_t getHeight() { return height; }
 };
 
