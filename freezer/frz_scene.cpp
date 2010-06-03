@@ -30,7 +30,7 @@ Scene::Scene(): triangles(), shared_triangles(),
 Scene::~Scene() {
 }
 
-void Triangle::setThickness(uint16_t th) {
+void Scene::Triangle::setThickness(uint16_t th) {
   if (th) {
     flags |= FL_EXTR;
   } else {
@@ -39,7 +39,7 @@ void Triangle::setThickness(uint16_t th) {
   thickness = th;
 }
 
-void Triangle::setFlatNormal(bool fn) {
+void Scene::Triangle::setFlatNormal(bool fn) {
   if (fn) {
     flags |= FL_FLATN;
   } else {
@@ -47,7 +47,7 @@ void Triangle::setFlatNormal(bool fn) {
   }
 }
 
-void Triangle::setDoubleSided(bool ds) {
+void Scene::Triangle::setDoubleSided(bool ds) {
   if (ds) {
     flags |= FL_DS;
   } else {
@@ -55,7 +55,7 @@ void Triangle::setDoubleSided(bool ds) {
   }
 }
 
-void Triangle::flatNormal() {
+void Scene::Triangle::flatNormal() {
   vertex u, v, n;
   u = b-a;
   v = c-b;

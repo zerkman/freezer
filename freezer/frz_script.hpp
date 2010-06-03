@@ -41,9 +41,9 @@ public:
   virtual ~Script() {}
 
   virtual void setupFrame(uint32_t time, trans t[]) = 0;
-  Triangle *getTriangles() { return scene->getTriangles(); }
+  Scene::Triangle *getTriangles() { return scene->getTriangles(); }
   int getTriangleCount() { return scene->getTriangleCount(); }
-  Triangle *getSharedTriangles() { return scene->getSharedTriangles(); }
+  Scene::Triangle *getSharedTriangles() { return scene->getSharedTriangles(); }
   int getSharedTriangleCount() { return scene->getSharedTriangleCount(); }
   int getObjectCount() { return scene->getObjectCount(); }
   const vertex &getLightSource() const { return scene->getLightSource(); }

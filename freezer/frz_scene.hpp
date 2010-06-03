@@ -31,6 +31,7 @@
 
 namespace Frz {
 
+class Scene {
 struct vvertex : public vertex {
   vvertex(): vertex() {}
   vvertex(const Object3d::Vertex &v): vertex(v.x, v.y, v.z, 1.0f) {}
@@ -41,6 +42,7 @@ struct vvertex : public vertex {
   }
 };
 
+public:
 /* container class for 3D Triangle/Quad/Procedural data */
 struct Triangle {
   /* Engine object type (cf. frz_defs.h) */
@@ -78,7 +80,7 @@ struct Triangle {
   void flatNormal();
 };
 
-class Scene {
+private:
   alignvec<Triangle> triangles;
   alignvec<Triangle> shared_triangles;
   vertex lightsource;
