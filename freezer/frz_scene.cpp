@@ -106,7 +106,7 @@ int Scene::add_object(const Object3d &obj, uint16_t type, float zoom,
   }
   np = obj.polyCount();
   for (i=0; i<np; i++) {
-    const Poly &p = obj.poly(i);
+    const Object3d::Poly &p = obj.poly(i);
     if (p.triangle)
       triangles[triangles.growup()] = Triangle(OB_TRIANGLE, type, n_obj, tex_id,
           p.color, obj.vert(p.a)*zoom, obj.vert(p.b)*zoom, obj.vert(p.c)*zoom);
@@ -128,7 +128,7 @@ int Scene::add_object(const Object3d &obj, uint16_t type, float zoom,
     int t1;
     memset(n, 0, nv*sizeof(vertex));
     for (i=0; i<np; i++) {
-      const Poly &p = obj.poly(i);
+      const Object3d::Poly &p = obj.poly(i);
       if (p.triangle) {
         n[p.a].update_norm(obj.vert(p.c), obj.vert(p.a), obj.vert(p.b));
         n[p.b].update_norm(obj.vert(p.a), obj.vert(p.b), obj.vert(p.c));
@@ -144,7 +144,7 @@ int Scene::add_object(const Object3d &obj, uint16_t type, float zoom,
       n[i].normalize();
     t1 = t0;
     for (i=0; i<np; i++) {
-      const Poly &p = obj.poly(i);
+      const Object3d::Poly &p = obj.poly(i);
       Triangle &t = triangles[t1++];
       t.na = n[p.a];
       t.nb = n[p.b];

@@ -24,8 +24,8 @@
 
 using namespace Frz;
 
-Poly::Poly(int _a, int _b, int _c, int _d, int _color) : a(_a), b(_b), c(_c),
-    d(_d), color(_color), triangle(false) {
+Object3d::Poly::Poly(int _a, int _b, int _c, int _d, int _color) : a(_a), b(_b),
+    c(_c), d(_d), color(_color), triangle(false) {
   if (d == -1)
     triangle = true;
   else if (a == b) {

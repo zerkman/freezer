@@ -33,6 +33,8 @@
 
 namespace Frz {
 
+class Object3d {
+public:
 struct Vertex {
   float x, y, z;
 
@@ -121,7 +123,6 @@ struct Poly {
   }
 };
 
-class Object3d {
 protected:
   std::vector<Vertex> vertices;
   std::vector<Poly> polys;

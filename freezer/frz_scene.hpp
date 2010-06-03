@@ -33,7 +33,7 @@ namespace Frz {
 
 struct vvertex : public vertex {
   vvertex(): vertex() {}
-  vvertex(const Vertex &v): vertex(v.x, v.y, v.z, 1.0f) {}
+  vvertex(const Object3d::Vertex &v): vertex(v.x, v.y, v.z, 1.0f) {}
   vvertex(const vertex &v): vertex(v) {}
   vertex &as_vertex() const { return *(vertex*)this; }
   void update_norm(const vvertex &a, const vvertex &b, const vvertex &c) {
