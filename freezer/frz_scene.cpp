@@ -24,7 +24,7 @@ using namespace Frz;
 Scene::Scene(): triangles(), shared_triangles(),
     lightsource(0.57735027f, -0.57735027f, -0.57735027f),
     n_obj(0), n_tri(0), n_shared_tri(0), f_flash(false), background(0x200020),
-    filter_color(0xffffff), filter_strength(0.0f) {
+    fade_color(0xffffff), fade_strength(0.0f) {
 }
 
 Scene::~Scene() {
@@ -86,6 +86,7 @@ int Scene::add_quad(uint16_t _sh_type, uint16_t _rot_id, uint16_t _tex_id,
   return i;
 }
 
+/*
 int Scene::add_shared(uint16_t _ob_type, uint16_t _sh_type, uint16_t _rot_id,
     uint16_t _tex_id, uint32_t _color, const vertex &_a, const vertex &_b,
     const vertex &_c, const vertex &_d) {
@@ -95,6 +96,7 @@ int Scene::add_shared(uint16_t _ob_type, uint16_t _sh_type, uint16_t _rot_id,
   n_shared_tri = shared_triangles.getSize();
   return i;
 }
+*/
 
 int Scene::add_object(const Object3d &obj, uint16_t type, float zoom,
     uint16_t tex_id) {

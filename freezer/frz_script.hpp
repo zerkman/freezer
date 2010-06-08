@@ -43,14 +43,14 @@ public:
   virtual void setupFrame(uint32_t time, trans t[]) = 0;
   Scene::Triangle *getTriangles() { return scene->getTriangles(); }
   int getTriangleCount() { return scene->getTriangleCount(); }
-  Scene::Triangle *getSharedTriangles() { return scene->getSharedTriangles(); }
-  int getSharedTriangleCount() { return scene->getSharedTriangleCount(); }
+  //Scene::Triangle *getSharedTriangles() { return scene->getSharedTriangles(); }
+  //int getSharedTriangleCount() { return scene->getSharedTriangleCount(); }
   int getObjectCount() { return scene->getObjectCount(); }
   const vertex &getLightSource() const { return scene->getLightSource(); }
   bool getFlash() { return scene->getFlash(); }
   uint32_t getBackgroundColor() { return scene->getBackgroundColor(); }
-  uint32_t getFilterColor() { return scene->getFilterColor(); }
-  float getFilterStrength() { return scene->getFilterStrength(); }
+  uint32_t getFadeColor() { return scene->getFadeColor(); }
+  float getFadeStrength() { return scene->getFadeStrength(); }
 };
 
 }; // namespace Frz

@@ -95,8 +95,8 @@ void System::draw(uint32_t time, void * buf) {
   fd.backgdc = script.getBackgroundColor();
   fd.blur_strength = 0.50001f;
   fd.blur_strength1 = 0.49999f;
-  fd.filter_color = script.getFilterColor();
-  fd.filter_strength = script.getFilterStrength();
+  fd.filter_color = script.getFadeColor();
+  fd.filter_strength = script.getFadeStrength();
   if (script.getFlash())
     fd.flash_strength = 255.f;
   else
@@ -111,7 +111,7 @@ void System::draw(uint32_t time, void * buf) {
 
   data3d.e3d_ea = spu_ea(this);
   data3d.t_ea = spu_ea(script.getTriangles());
-  data3d.sh_t_ea = spu_ea(script.getSharedTriangles());
+  //data3d.sh_t_ea = spu_ea(script.getSharedTriangles());
   data3d.fd_ea = spu_ea(&fd);
   data3d.sync_ea = spu_ea(&sync[0]);
   for (i=0; i<LIST_COUNT; i++) {
@@ -120,7 +120,7 @@ void System::draw(uint32_t time, void * buf) {
   data3d.n_obj = script.getObjectCount();
   data3d.n_t = script.getTriangleCount();
   data3d.time = time;
-  data3d.n_shared = script.getSharedTriangleCount();
+  //data3d.n_shared = script.getSharedTriangleCount();
   data3d.lightsource = script.getLightSource().v();
 
   t1 = uTime();

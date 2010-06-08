@@ -32,6 +32,8 @@
 namespace Frz {
 
 class Scene {
+  friend class Script;
+
 struct vvertex : public vertex {
   vvertex(): vertex() {}
   vvertex(const Object3d::Vertex &v): vertex(v.x, v.y, v.z, 1.0f) {}
@@ -193,8 +195,18 @@ private:
   int n_shared_tri;
   bool f_flash;
   uint32_t background;
-  uint32_t filter_color;
-  float filter_strength;
+  uint32_t fade_color;
+  float fade_strength;
+
+  const vertex &getLightSource() const { return lightsource; }
+  bool getFlash() {
+    bool f = f_flash; 
+    f_flash = false;
+    return f;
+  }
+  uint32_t getBackgroundColor() const { return background; }
+  uint32_t getFadeColor() const { return fade_color; }
+  float getFadeStrength() const { return fade_strength; }
 
 protected:
   void flash() {
@@ -203,43 +215,32 @@ protected:
   void setBackgroundColor(uint32_t c) {
     background = c;
   }
-  void setFilter(uint32_t c, float s) {
-    filter_color = c;
-    filter_strength = s;
+  void setFade(uint32_t c, float s) {
+    fade_color = c;
+    fade_strength = s;
   }
-
-public:
-  Scene();
-  virtual ~Scene();
-
   int add_triangle(uint16_t _sh_type, uint16_t _rot_id, uint16_t _tex_id,
       uint32_t _color, const vertex &_a, const vertex &_b, const vertex &_c);
   int add_quad(uint16_t _sh_type, uint16_t _rot_id, uint16_t _tex_id,
       uint32_t _color, const vertex &_a, const vertex &_b, const vertex &_c,
       const vertex &_d);
-  int add_shared(uint16_t _ob_type, uint16_t _sh_type, uint16_t _rot_id,
+  /*int add_shared(uint16_t _ob_type, uint16_t _sh_type, uint16_t _rot_id,
       uint16_t _tex_id, uint32_t _color, const vertex &_a, const vertex &_b,
-      const vertex &_c, const vertex &_d);
+      const vertex &_c, const vertex &_d);*/
   int add_object(const Object3d &obj, uint16_t type=SH_SMOOTH, float zoom=1.0f,
       uint16_t tex_id=-1);
   int add_object_extrude(const Object3d &obj, uint16_t th, float zoom=1.0f);
   int add_object();
-  virtual void setupFrame(uint32_t time, trans t[]) = 0;
   Triangle *getTriangles() { return &triangles[0]; }
-  Triangle *getSharedTriangles() { return &shared_triangles[0]; }
+  //Triangle *getSharedTriangles() { return &shared_triangles[0]; }
   int getTriangleCount() { return n_tri; }
-  int getSharedTriangleCount() { return n_shared_tri; }
-  void setTriangleCount(int n) { n_tri = n; }
+  //int getSharedTriangleCount() { return n_shared_tri; }
   int getObjectCount() { return n_obj; }
-  const vertex &getLightSource() const { return lightsource; }
-  bool getFlash() {
-    bool f = f_flash; 
-    f_flash = false;
-    return f;
-  }
-  uint32_t getBackgroundColor() const { return background; }
-  uint32_t getFilterColor() const { return filter_color; }
-  float getFilterStrength() const { return filter_strength; }
+  virtual void setupFrame(uint32_t time, trans t[]) = 0;
+
+public:
+  Scene();
+  virtual ~Scene();
 };
 
 }; // namespace Frz
