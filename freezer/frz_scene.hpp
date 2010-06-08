@@ -130,7 +130,7 @@ struct Triangle {
    * \param _sh_type Shading type
    * \param _rot_id Rotation matrix identifier
    * \param _tex_id Texture identifier (currently unused)
-   * \param _color 32-bit color value (ARGB format)
+   * \param _color 32-bit color value (ARGB binary format)
    * \param _a first triangle/quad vertex
    * \param _b second triangle/quad vertex
    * \param _c third triangle/quad vertex
@@ -143,7 +143,7 @@ struct Triangle {
       flags(0), thickness(0), color(_color), 
       a(_a), b(_b), c(_c), d(_d), na(), nb(), nc(), nd() {}
 
-  /*! \brief Set extrusion mode and thickness.
+  /*! \brief Sets extrusion mode and thickness.
    *
    * If \p th is zero, extrusion is deactivated. If it is nonzero, extrusion is
    * activated for this polygon, and the \p th value is used as thickness value.
@@ -159,7 +159,7 @@ struct Triangle {
    * \param th thickness value
    */
   void setThickness(uint16_t th);
-  /*! \brief Set automatic normal vector generation for flat shading.
+  /*! \brief Sets automatic normal vector generation for flat shading.
    *
    * If this mode is set, the engine automatically computes the normal vector
    * of the polygon at each frame update, and sets the computed value to the
