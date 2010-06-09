@@ -25,22 +25,11 @@
 namespace Frz {
 
 class Script {
+  friend class System;
+
   Scene *scene;
-  bool f_flash;
 
-protected:
-  void setScene(Scene *s) {
-    scene = s;
-  }
-  void sceneSetup(uint32_t time, trans t[]) {
-    scene->setupFrame(time, t);
-  }
-
-public:
-  Script(): f_flash(false) {}
-  virtual ~Script() {}
-
-  virtual void setupFrame(uint32_t time, trans t[]) = 0;
+  void sceneSetup(uint32_t time, trans t[]) { scene->setupFrame(time, t); }
   Scene::Triangle *getTriangles() { return scene->getTriangles(); }
   int getTriangleCount() { return scene->getTriangleCount(); }
   //Scene::Triangle *getSharedTriangles() { return scene->getSharedTriangles(); }
@@ -51,6 +40,14 @@ public:
   uint32_t getBackgroundColor() { return scene->getBackgroundColor(); }
   uint32_t getFadeColor() { return scene->getFadeColor(); }
   float getFadeStrength() { return scene->getFadeStrength(); }
+
+public:
+  Script() {}
+  virtual ~Script() {}
+
+protected:
+  void setScene(Scene *s) { scene = s; }
+  virtual void setupFrame(uint32_t time) = 0;
 };
 
 }; // namespace Frz

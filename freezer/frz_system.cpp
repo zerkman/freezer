@@ -103,7 +103,8 @@ void System::draw(uint32_t time, void * buf) {
     fd.flash_strength *= 0.5f;
 
   if (first_draw) {
-    script.setupFrame(time, transforms);
+    script.setupFrame(time);
+    script.sceneSetup(time, transforms);
     for (i = 0; i < script.getObjectCount(); i++)
       make_rotation(fd.rot[i], transforms[i]);
     first_draw = false;
@@ -137,7 +138,8 @@ void System::draw(uint32_t time, void * buf) {
   t[2] += t2-t1;
 
   /* Prepare next frame as the SPEs are rendering */
-  script.setupFrame(time, transforms);
+  script.setupFrame(time);
+  script.sceneSetup(time, transforms);
   for (i = 0; i < script.getObjectCount(); i++)
     make_rotation(fd.rot[i], transforms[i]);
   t3 = uTime();

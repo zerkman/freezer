@@ -70,8 +70,8 @@ public:
   virtual ~MyScript() {
     delete scene;
   }
-  virtual void setupFrame(uint32_t time, Frz::trans t[]) {
-    sceneSetup(time, t);
+  virtual void setupFrame(uint32_t time) {
+    // Do nothing.
   }
 };
 
