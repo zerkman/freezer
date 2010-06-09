@@ -459,7 +459,7 @@ protected:
    */
   int getObjectCount() { return n_obj; }
 
-  /*! \brief Sets up an animation frame.
+  /*! \brief Sets up a scene frame.
    *
    * This method is called by the animation system before drawing a new
    * frame. It is responsible for setting the correct animation values
