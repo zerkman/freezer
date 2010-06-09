@@ -24,6 +24,12 @@
 
 namespace Frz {
 
+/*! \brief An animation manager.
+ *
+ * This class is responsible for managing a full animation. It allocates and
+ * deallocates the different scenes, and decides which scene to render at
+ * what time.
+ */
 class Script {
   friend class System;
 
@@ -42,11 +48,26 @@ class Script {
   float getFadeStrength() { return scene->getFadeStrength(); }
 
 public:
+  //! Constructor.
   Script() {}
+  //! Destructor.
   virtual ~Script() {}
 
 protected:
+  /*! \brief Sets the current scene.
+   *
+   * \param s A pointer to the Scene object to be used.
+   */
   void setScene(Scene *s) { scene = s; }
+
+  /*! \brief Sets up an animation frame.
+   *
+   * This method is called before the \ref Scene::setupFrame "setupFrame"
+   * method is called on the current scene. This gives the opportunity to
+   * the script to switch the current scene according to the time value.
+   *
+   * \param time the animation time in milliseconds
+   */
   virtual void setupFrame(uint32_t time) = 0;
 };
 
