@@ -26,6 +26,9 @@
 Freezer is a 3D engine and animation system for the Cell Broadband Engine
 processor.
 
+Freezer is distributed under the terms of the GNU Lesser General Public
+Licence.
+
 The 3D engine main characteristics are:
 
 - Efficient use of SPE's for display acceleration. Used PPE CPU power is reduced
@@ -49,21 +52,113 @@ The animation system characteristics are:
 
 \section MainTOC Table Of Contents
 
-\ref InstMan "Installation of the library". This
-page indicates the procedure to generate the library from source
+- \ref InstMan "Installation of the library". This page indicates the
+  procedure to generate the library from source code.
+- \ref CompMan - Compile and execute a sample program.
+- \ref QuickTutorial - A step-by-step tutorial about what you can do using
+  Freezer.
 
 \section Links Links
 
+- <a href="http://freezer.sector1.fr/">The official Freezer website</a>,
+where you can find the latest version of this documentation.
 - <a href="http://github.com/fgalea/freezer/">The Freezer project page on
-Github</a>
+Github</a>, allowing to browse the source code and examine the different
+commits.
 
 
 \page InstMan Freezer library installation
 
-\todo Complete the page.
+This page concerns the setup and installation of Freezer, either on a native
+Cell BE host, or on a cross-compilation setup.
 
+\par Required tools
+Freezer requires the following tools to be installed to be able to set up and
+build the library:
+  - git
+  - autoconf
+  - automake
+  - libtool
+  - make
+  - g++ for ppu
+  - gcc for spu (spu-gcc)
+  - eventually SDL.
+
+\par Source code download
+To download the latest repository version, issue the commands:
+\verbatim
+$ git clone http://github.com/fgalea/freezer.git
+$ cd freezer
+\endverbatim
+then, create the autotools script files:
+\verbatim
+$ ./bootstrap
+\endverbatim
+
+\par Source code setup
+If using on a Cell BE host, just execute the \c configure script:
+\verbatim
+$ ./configure
+\endverbatim
+If cross compiling, you must provide a host type as argument of the \c
+configure script, either:
+ - \verbatim $ ./configure --host=ppu \endverbatim for 64-bit PPU code
+   generation, or
+ - \verbatim $ ./configure --host=ppu32 \endverbatim for 32-bit PPU code.
+
+\par
+If any of the previous command fails, this is certainly because one of the
+required tools listed above is missing.
+
+\par Building the library
+If the setup process went ok, you should be able to build the library using
+the command:
+\verbatim
+$ make
+\endverbatim
+
+\par Installation of the library
+The default installation directory is <tt>/usr/local</tt>. You then need the
+root privileges to be able to install the library. The following command will
+do the job:
+\verbatim
+$ make install
+\endverbatim
+
+\par
+If you do not have the root privileges, you still can install the library to
+a custom directory. For this, during the setup phase you need to specify the
+installation directory using the \c --target argument to the \c configure
+script, like for instance:
+\verbatim
+$ ./configure --prefix=path/to/installation/directory
+\endverbatim
+
+\par Compilation and execution of the example programs
+After having compiled the library, even without installing, you can try and
+compile the example programs using the commands:
+\verbatim
+$ cd examples
+$ make
+\endverbatim
+\par
+You should end up with a bunch of various executable files, each demo program
+coming in three variants, with \c _sdl, \c _ps3fb and \c _bmp suffixes. The
+SDL version is preferred when running in windowed mode, the ps3fb version is
+for runnnig from console mode, and the bmp version is just a test program to
+generate the images in bmp-formatted files, not really useful unless when
+debugging (or using the cell simulator when away from your ps3 for instance).
+
+\page CompMan Use Freezer in your own programs
+
+\todo complete the page.
+
+\page QuickTutorial Freezer Quick Tutorial
+
+\todo complete the page.
 
 */
+
 
 #ifndef _FRZ_SYSTEM_HPP_
 #define _FRZ_SYSTEM_HPP_

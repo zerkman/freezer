@@ -1,4 +1,5 @@
-This is Freezer, a 3D graphics engine for the Cell Broadband Engine processor.
+This is Freezer, a 3D graphics engine for the Cell Broadband Engine
+processor.
 
 This package contains a library which implements a 3D engine and software
 renderer for computers having a Cell Broadband Engine processor, such as
@@ -6,11 +7,11 @@ Sony's PlayStation 3.
 
 Requirements
 ------------
- - A computer with Cell B.E. processor, running a Linux-based operating system.
-A PS3 (phat model, with firmware <= 3.15) is the right machine to use. Using an
-IBM Cell blade (QS20/QS21/QS22), or even IBM's Cell system simulator should work
-aswell, at the price of no video output through framebuffer (you can still try
-the SDL output interface, who knows).
+ - A computer with Cell B.E. processor, running a Linux-based operating
+system. A PS3 (phat model, with firmware <= 3.15) is the right machine to
+use. Using an IBM Cell blade (QS20/QS21/QS22), or even IBM's Cell system
+simulator should work aswell, at the price of no video output through
+framebuffer (you can still try the SDL output interface, who knows).
  - The required libraries are : libspe2. Yes, that's all.
  - Optional libraries : SDL.
 
@@ -22,19 +23,23 @@ Setup
  - Configure and build the library:
   $ ./configure
   $ make
- - As the system administrator (commonly known as 'root'), install the library:
+ - As the system administrator (commonly known as 'root'), install the
+ library:
   $ make install
 
 Create your own programs
 ------------------------
-For the moment, the documentation is somewhat nonexistent. You still can read
-the comments in the code, or start and try to compile and execute the example
-programs in the examples/ directory.
+The Freezer API documentation is available from the Freezer website (see
+below).
+
+
+You still can read the comments in the code, or start and try to compile and
+execute the example programs in the examples/ directory.
 
 
 Freezer on the web
 ------------------
-The home site of this package is not available yet.
+The home site of this package is http://freezer.sector1.fr/.
 
 The latest revision of the Freezer source code can be retrieved from Github at
 the following url: http://github.com/fgalea/freezer
@@ -44,4 +49,4 @@ Problems reporting
 ------------------
 Report problems with this package to Francois Galea <fgalea@free.fr>.
 
-May 2010
+June 2010
