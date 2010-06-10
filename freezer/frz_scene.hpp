@@ -113,21 +113,29 @@ struct vvertex : public vertex {
 public:
 /*! \brief Container class for 3D triangle or quad polygon data.
  *
- * Triangle objects actually embed data for storing either a triangle or a quad.
- * The class contains the four vertices necessary to produce a quad, where the
- * fourth one is ignored when the class encodes a triangle.
+ * Triangle objects actually embed data for storing either a triangle or a
+ * quad. The class contains the four vertices necessary to produce a quad,
+ * where the fourth one is ignored when the class encodes a triangle.
  *
  * The class information includes:
  *  - the object type (triangle or quad);
  *  - the shading type;
  *  - a rotation matrix identifier;
+ *  - a texture identifier (unused yet);
  *  - a color value;
  *  - specific flags-dependent data.
  *
  * For each vertex, the following information is provided:
  *  - its 3D coordinates (\e x, \e y, \e z);
- *  - the 3D coordinates (\e x, \e y, \e z) of the normal vector associated to
- *    the vertex.
+ *  - the 3D coordinates (\e x, \e y, \e z) of the normal vector associated
+ *    to the vertex:
+ *  - a pair of (u,v) coordinates for texture mapping (unused yet).
+ *
+ * The Triangle class is designed in such a way that it exactly takes 128
+ * bytes in memory. This is necessary to optimize PPE/SPE DMA communication.
+ * The Scene class ensures its Triangle buffer is 128-byte aligned in memory
+ * for that same purpose, using the specifically-designed \ref alignvec
+ * aligned buffer.
  */
 struct Triangle {
   //! Engine object type. (cf. frz_defs.h)
