@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Take a spu executable and turn into into a libtool compatible .lo (and .o)
+# Take a spu executable and turn it into a libtool compatible .lo (and .o)
 # file.
 # This is needed when you want to embed a SPU executable into a shared library.
 #
