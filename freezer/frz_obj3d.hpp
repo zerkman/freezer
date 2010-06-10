@@ -284,11 +284,11 @@ public:
 
   /*! \brief Inserts a polygon.
    *
-   * \param _a First vertex index
-   * \param _b Second vertex index
-   * \param _c Third vertex index
-   * \param _d Fourth vertex index (set to -1 if the poly is a triangle)
-   * \param _color Polygon color in ARGB binary format
+   * \param a First vertex index
+   * \param b Second vertex index
+   * \param c Third vertex index
+   * \param d Fourth vertex index (set to -1 if the poly is a triangle)
+   * \param color Polygon color in ARGB binary format
    *
    * \return the inserted polygon number
    */
@@ -326,6 +326,7 @@ public:
    *
    * \param filename the file name
    * \param zoom the zoom value
+   * \param color Object color in ARGB binary format
    */
   void importOff(const std::string &filename, float zoom=1.0f,
       uint32_t color=0xffffff);

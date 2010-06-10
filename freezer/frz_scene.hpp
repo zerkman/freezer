@@ -400,7 +400,8 @@ protected:
    *
    * \param obj the 3D object to be added
    * \param type shading type (cf. frz_defs.h)
-   * \param zoom value
+   * \param zoom zoom value
+   * \param tex_id texture identifier (unused yet)
    * \return the rotation matrix identifier
    */
   int add_object(const Object3d &obj, uint16_t type=SH_SMOOTH, float zoom=1.0f,
@@ -416,8 +417,7 @@ protected:
    *
    * \param obj the 3D object to be added
    * \param th thickness value
-   * \param type shading type (cf. frz_defs.h)
-   * \param zoom value
+   * \param zoom zoom value
    * \return the rotation matrix identifier
    */
   int add_object_extrude(const Object3d &obj, uint16_t th, float zoom=1.0f);
