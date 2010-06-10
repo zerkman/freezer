@@ -60,13 +60,40 @@ struct vertex {
   vector float v() const { return load_unaligned(&x); }
 };
 
-/* short vertex class for normalized vectors */
+/*! \brief Short vertex class for normalized vectors.
+ *
+ * All the vertex coordinates are stored in signed 16-bit fixed-point format
+ * with 1 bit for the sign and 15 bits of mantissa. Encoded values hence may
+ * only vary from -1 (\c 0x8000) to 0.99997 (0x7FFF). It can be considered
+ * sufficient to store normal vectors.
+ */
 struct svertex {
-  int16_t x, y, z, t;
-  svertex(): x(0), y(0), z(0), t(0) {}
+  int16_t x;  //!< The \e x coordinate
+  int16_t y;  //!< The \e y coordinate
+  int16_t z;  //!< The \e z coordinate
+  int16_t t;  //!< The \e t coordinate
+
+  /*! \brief Default constructor.
+   *
+   * \param _x the \e x coordinate
+   * \param _y the \e y coordinate
+   * \param _z the \e z coordinate
+   * \param _t the \e t coordinate
+   */
+  svertex(int16_t _x=0, int16_t _y=0, int16_t _z=0, int16_t _t=0x7fff)
+      : x(_x), y(_y), z(_z), t(_t) {}
+
+  /*! \brief Copy constructor.
+   *
+   * \param v the object to be copied.
+   */
   svertex(const svertex &v): x(v.x), y(v.y), z(v.z), t(v.t) {}
+
+  /*! \brief vertex-converting constructor.
+   *
+   * \param v the vertex object to be converted.
+   */
   svertex(const vertex &v);
-  svertex(int16_t _x, int16_t _y, int16_t _z): x(_x), y(_y), z(_z), t(0x7fff) {}
 };
 
 } // namespace Frz
