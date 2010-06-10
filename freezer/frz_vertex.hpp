@@ -27,36 +27,149 @@
 
 namespace Frz {
 
+/*! \brief A 3D vertex.
+ *
+ * This class generally is used for storing a set of 3D coordinates, but also
+ * may embed extra data. Its main purpose is to be packed into
+ * Scene::Triangle objects, for communication with the SPE's. In this case, a
+ * vertex will be loaded into a 16-byte vector on SPU side.
+ *
+ * The fourth vertex element is generally ignored by the arithmetics and
+ * normalization methods. It is used for storage and 16-byte alignment only.
+ */
 struct vertex {
-  union { float x; uint32_t a; };
-  union { float y; uint32_t b; };
-  union { float z; uint32_t c; };
-  union { float t; uint32_t s; };
-  vertex(): x(0.f), y(0.f), z(0.f), t(0.f) {}
-  vertex(const vertex &v): x(v.x), y(v.y), z(v.z), t(v.t) {}
-  vertex(float _x, float _y, float _z, float _t=1.0f):
+  union {
+    float x;     //!< First vertex coordinate in floating point format
+    uint32_t a;  //!< First vertex coordinate in 32-bit integer format
+  };
+  union {
+    float y;     //!< Second vertex coordinate in floating point format
+    uint32_t b;  //!< Second vertex coordinate in 32-bit integer format
+  };
+  union {
+    float z;     //!< Third vertex coordinate in floating point format
+    uint32_t c;  //!< Third vertex coordinate in 32-bit integer format
+  };
+  union {
+    float t;     //!< Fourth vertex coordinate in floating point format
+    uint32_t s;  //!< Fourth vertex coordinate in 32-bit integer format
+  };
+
+  /*! \brief Default constructor.
+   *
+   * \param _x the first vertex coordinate
+   * \param _y the second vertex coordinate
+   * \param _z the third vertex coordinate
+   * \param _t the fourth vertex coordinate
+   */
+  vertex(float _x=0.f, float _y=0.f, float _z=0.f, float _t=1.0f):
       x(_x), y(_y), z(_z), t(_t) {}
+
+  /*! \brief Copy constructor.
+   *
+   * \param v the vertex to be copied
+   */
+  vertex(const vertex &v): x(v.x), y(v.y), z(v.z), t(v.t) {}
+
+  /*! \brief Integer constructor.
+   *
+   * \param _a the first vertex coordinate
+   * \param _b the second vertex coordinate
+   * \param _c the third vertex coordinate
+   * \param _s the fourth vertex coordinate
+   */
   vertex(uint32_t _a, uint32_t _b, uint32_t _c, uint32_t _s):
       a(_a), b(_b), c(_c), s(_s) {}
+
+  /*! \brief Altivec vector conversion constructor.
+   *
+   * \param v the Altivec vector variable to be converted
+   */
   vertex(vector float v) { set(v); }
 
+  /*! \brief Sets a vertex value from an Altivec vector.
+   *
+   * \param v the Altivec vector
+   */
   void set(vector float v) { store_unaligned(&x, v); }
 
+  /*! \brief vertex subtraction operator.
+   *
+   * \param a the vertex to be subtracted to this
+   *
+   * \return the result of the operation
+   */
   vertex operator-(const vertex &a) const {return vertex(x-a.x, y-a.y, z-a.z);}
+
+  /*! \brief vertex addition operator.
+   *
+   * \param a the vertex to be added to this
+   *
+   * \return the result of the operation
+   */
   vertex operator+(const vertex &a) const {return vertex(x+a.x, y+a.y, z+a.z);}
+
+  /*! \brief vertex cross product operator.
+   *
+   * \param b the vertex to be the right hand operand to the cross product
+   *
+   * \return the result of the operation
+   */
   vertex operator*(const vertex &b) const {
     return vertex(y*b.z-z*b.y, z*b.x-x*b.z, x*b.y-y*b.x);
   }
+
+  /*! \brief Scale all coefficients with a scalar value.
+   *
+   * \param f the scalar value to be multiplied with all the vertex
+   *          coordinates
+   *
+   * \return the result of the operation
+   */
   vertex operator*(float f) const { return vertex(x*f, y*f, z*f); }
 
+  /*! \brief Normalizes the vertex.
+   *
+   * All terms of the vertex are divided by the vertex's norm.
+   */
   void normalize(void);
+
+  /*! \brief Computes the square norm of the vertex.
+   *
+   * \return the square of the vertex's norm
+   */
   float norm2(void);
+
+  /*! \brief Computes the norm of the vertex.
+   *
+   * \return the vertex's norm
+   */
   float norm(void);
+
+  /*! \brief Updates the normal vector in vertex \p b of triangle (\p a,\p b,
+   * \p c).
+   *
+   * This corresponds to adding the normalized <em>ab * bc</em> cross
+   * product, multiplied by the angle in \p b
+   */
   void update_norm(const vertex &a, const vertex &b, const vertex &c);
+
+  /*! \brief Outputs the vertex in human-readable fashion.
+   *
+   * \param os the output stream
+   * \param v the vertex to be displayed
+   *
+   * \return the output stream
+   */
   friend std::ostream &operator<<(std::ostream &os, const vertex &v) {
     os <<"("<<v.x<<","<<v.y<<","<<v.z<<","<<v.t<<")";
     return os;
   }
+
+  /*! \brief Converts the vertex to an Altivec vector.
+   *
+   * \return the converted Altivec vector
+   */
   vector float v() const { return load_unaligned(&x); }
 };
 
